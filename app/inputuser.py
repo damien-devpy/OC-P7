@@ -1,12 +1,14 @@
-
 class InputUser:
     """Get input user."""
-    
+
     def __init__(self, raw_input):
         """Create an input user object.
 
-        :param raw_input: A raw input from user
-        :type raw_input: str
+        Args:
+            raw_input (str): A raw input from user
+
+        Attribute:
+            raw_input (str): Contain the raw input from user
         """
         self._raw_input = raw_input
 
