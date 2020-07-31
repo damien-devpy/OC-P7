@@ -1,3 +1,6 @@
 # Compliled
 __pycache__/
 
+# .env files
+*.env
+

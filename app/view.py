@@ -1,9 +1,10 @@
 from flask import Flask, render_template
 from app.questionform import QuestionForm
 from app.parser import Parser
+from os import environ
 
 app = Flask(__name__)
-app.config["SECRET_KEY"] = "temporary secret in my code :o)"
+app.config["SECRET_KEY"] = environ.get('SECRET_KEY_FLASK')
 
 
 @app.route("/", methods=["GET", "POST"])

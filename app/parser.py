@@ -34,12 +34,11 @@ class Parser:
     def _remove_special_characters(self):
         """Removes special characters from a sentence.
 
-        Private method working on self._input_user.
+        Private method acting on self._input_user.
 
         """
 
-        re_spec_characters = r"\W"
-        self._input_user = sub(re_spec_characters, " ", self._input_user)
+        self._input_user = sub(r"\W", " ", self._input_user)
 
     def _remove_stop_words(self):
         """Removes stop words from a sentence.
