@@ -12,6 +12,7 @@ black = "*"
 flake8 = "*"
 flask-wtf = "*"
 stopwords-fr = "*"
+unidecode = "*"
 
 [requires]
 python_version = "3.8"

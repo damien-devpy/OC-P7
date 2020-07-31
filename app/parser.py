@@ -49,10 +49,9 @@ class Parser:
         """
 
         sentence = self._input_user.split()
-        sentence = [word.lower()
-                    for word in sentence
-                    if word.lower() not in STOPWORDS
-                    ]
+        sentence = [
+            word.lower() for word in sentence if word.lower() not in STOPWORDS
+        ]
 
         self._input_user = " ".join(sentence)
 
@@ -62,4 +61,4 @@ class Parser:
 
     @input_user.setter
     def input_user(self, input_user):
-        self._input_user = input_user
+        self._input_user = str(input_user)

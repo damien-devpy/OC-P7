@@ -41,6 +41,17 @@ def test_parser_dont_removes_letters(setup_parser):
     assert string_without_spec_char == "bonjour"
 
 
+def test_parser_manage_numbers(setup_parser):
+
+    parser = setup_parser
+
+    parser.input_user = 42
+
+    string_parsed = parser.parse()
+
+    assert string_parsed == "42"
+
+
 def test_parser_removes_stop_words(setup_parser):
 
     parser = setup_parser
@@ -67,7 +78,9 @@ def test_parser_removes_spec_char_and_stop_words(setup_parser):
 
     parser = setup_parser
 
-    parser.input_user = "Bonjour, je voudrais la localisation de la Tour Eiffel !"
+    parser.input_user = (
+        "Bonjour, je voudrais la localisation de la Tour Eiffel !"
+    )
 
     string_parsed = parser.parse()
 
@@ -89,7 +102,9 @@ def test_parser_another_sentence_2(setup_parser):
 
     parser = setup_parser
 
-    parser.input_user = "Hello ! J'aurais besoin de l'adresse du Musée du Louvre."
+    parser.input_user = (
+        "Hello ! J'aurais besoin de l'adresse du Musée du Louvre."
+    )
 
     string_parsed = parser.parse()
 
