@@ -1,34 +1,65 @@
+from re import sub
+from app.configuration import STOPWORDS
+
+
 class Parser:
     """Parse input user."""
 
-    def __init__(self, input_user_object):
+    def __init__(self):
         """Create a parser object.
 
-        Args:
-            input_user_object (InputUser): Instance of InputUser containing a
-                raw input.
+        Attribute:
+            self._input_user (str): Contain a user input
 
-        Attributes:
-            input_object (InputUser): InputUser object that contain a raw input
-                user.
         """
 
-        self._input_object = input_user_object
-        self._input_parsed = None
+        self._input_user = str()
 
     def parse(self):
-        """Parse a raw input user.
+        """Parse an input user.
 
-        Turn a sentence into several words that represent a place.
+        Removes special characters.
+
+        Returns:
+
+            input_parsed (str): User input parsed
 
         """
 
-    @property
-    def input_object(self):
-        return self._input_object
+        self._remove_special_characters()
+        self._remove_stop_words()
+
+        return self._input_user
+
+    def _remove_special_characters(self):
+        """Removes special characters from a sentence.
+
+        Private method working on self._input_user.
+
+        """
+
+        re_spec_characters = r"\W"
+        self._input_user = sub(re_spec_characters, " ", self._input_user)
+
+    def _remove_stop_words(self):
+        """Removes stop words from a sentence.
+
+        Private method acting on self._input_user.
+
+        """
+
+        sentence = self._input_user.split()
+        sentence = [word.lower()
+                    for word in sentence
+                    if word.lower() not in STOPWORDS
+                    ]
+
+        self._input_user = " ".join(sentence)
 
     @property
-    def input_parsed(self):
-        return self._input_parsed
-    
-    
+    def input_user(self):
+        return self._input_user
+
+    @input_user.setter
+    def input_user(self, input_user):
+        self._input_user = input_user

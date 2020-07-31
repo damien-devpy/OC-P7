@@ -1,0 +1,11 @@
+<h1>Welcome at Harold's, GranPy Bot!</h1>
+
+<form method="POST">
+    {{ form.hidden_tag() }}
+    {{ form.name.label }} 
+    {{ form.name() }}
+    {{ form.submit() }}
+    {% if question %}
+    {{ question }}
+    {% endif %}
+</form>
