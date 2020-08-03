@@ -1,10 +1,11 @@
 from flask import Flask, render_template
 from app.questionform import QuestionForm
 from app.parser import Parser
+from app.googleapi import GoogleAPI
 from os import environ
 
 app = Flask(__name__)
-app.config["SECRET_KEY"] = environ.get('SECRET_KEY_FLASK')
+app.config["SECRET_KEY"] = environ.get("SECRET_KEY_FLASK")
 
 
 @app.route("/", methods=["GET", "POST"])
@@ -26,4 +27,6 @@ def parsing_input_user(sentence):
     parser = Parser()
     parser.input_user = sentence
 
-    return parser.parse()
+    api_google = GoogleAPI(parser)
+
+    return api_google.location

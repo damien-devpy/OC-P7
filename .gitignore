@@ -1,5 +1,6 @@
 # Compliled
 __pycache__/
+*.pytest_cache/
 
 # .env files
 *.env

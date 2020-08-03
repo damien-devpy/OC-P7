@@ -18,11 +18,11 @@ class Parser:
     def parse(self):
         """Parse an input user.
 
-        Removes special characters.
+        Removes special characters and stop words.
 
         Returns:
 
-            input_parsed (str): User input parsed
+            self._input_user (str): User input parsed
 
         """
 
@@ -47,12 +47,11 @@ class Parser:
 
         """
 
-        sentence = self._input_user.split()
         sentence = [
-            word.lower() for word in sentence if word.lower() not in STOPWORDS
+            word for word in self._input_user.split() if word not in STOPWORDS
         ]
 
-        self._input_user = " ".join(sentence)
+        self._input_user = "+".join(sentence)
 
     @property
     def input_user(self):
@@ -60,4 +59,4 @@ class Parser:
 
     @input_user.setter
     def input_user(self, input_user):
-        self._input_user = str(input_user)
+        self._input_user = str(input_user).lower()

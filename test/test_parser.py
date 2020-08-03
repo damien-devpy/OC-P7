@@ -16,7 +16,7 @@ def test_parser_taking_an_input(setup_parser):
 
     parser.input_user = "This is an input made by an user"
 
-    assert parser.input_user == "This is an input made by an user"
+    assert parser.input_user == "this is an input made by an user"
 
 
 def test_parser_removes_special_character(setup_parser):
@@ -34,11 +34,11 @@ def test_parser_dont_removes_letters(setup_parser):
 
     parser = setup_parser
 
-    parser.input_user = "#@*$%*Bonjour"
+    parser.input_user = "#@*$%*musée"
 
     string_without_spec_char = parser.parse()
 
-    assert string_without_spec_char == "bonjour"
+    assert string_without_spec_char == "musée"
 
 
 def test_parser_manage_numbers(setup_parser):
@@ -60,7 +60,7 @@ def test_parser_removes_stop_words(setup_parser):
 
     string_without_stop_words = parser.parse()
 
-    assert string_without_stop_words == "bonjour"
+    assert string_without_stop_words == ""
 
 
 def test_parser_still_removes_stop_words(setup_parser):
@@ -84,7 +84,7 @@ def test_parser_removes_spec_char_and_stop_words(setup_parser):
 
     string_parsed = parser.parse()
 
-    assert string_parsed == "bonjour voudrais localisation tour eiffel"
+    assert string_parsed == "tour+eiffel"
 
 
 def test_parser_another_sentence(setup_parser):
@@ -95,7 +95,7 @@ def test_parser_another_sentence(setup_parser):
 
     string_parsed = parser.parse()
 
-    assert string_parsed == "adresse chateau guédelon"
+    assert string_parsed == "chateau+guédelon"
 
 
 def test_parser_another_sentence_2(setup_parser):
@@ -108,4 +108,4 @@ def test_parser_another_sentence_2(setup_parser):
 
     string_parsed = parser.parse()
 
-    assert string_parsed == "hello besoin adresse musée louvre"
+    assert string_parsed == "musée+louvre"

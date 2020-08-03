@@ -4,15 +4,15 @@ url = "https://pypi.org/simple"
 verify_ssl = true
 
 [dev-packages]
-
-[packages]
-pytest = "*"
-flask = "*"
 black = "*"
 flake8 = "*"
+pytest = "*"
+pydocstyle = "*"
+
+[packages]
+flask = "*"
 flask-wtf = "*"
-stopwords-fr = "*"
-unidecode = "*"
+requests = "*"
 
 [requires]
 python_version = "3.8"
