@@ -1,17 +1,7 @@
 from app.parser import Parser
 from app.googleapi import GoogleAPI
-from pytest import fixture, mark
-
-
-@fixture
-def setup_google_api():
-
-    parser = MockParser()
-    parser.input_user = "tour+eiffel"
-
-    api_google = GoogleAPI(parser)
-
-    return api_google
+from app.unknownplaceerror import UnknownPlaceError
+from pytest import fixture, mark, raises
 
 
 class MockParser:
@@ -67,93 +57,88 @@ def mock_requests_get(*args, **kwargs):
     return MockResponse()
 
 
-def test_class_google_api_can_take_a_parser_object(setup_google_api):
+@fixture
+def setup_mocking_parser():
 
-    api_google = setup_google_api
+    parser = MockParser()
+    return parser
+
+
+@fixture
+def setup_parser():
+
+    parser = Parser()
+    return parser
+
+
+def test_class_google_api_can_take_a_parser_object(setup_mocking_parser):
+
+    parser = setup_mocking_parser
+    parser.input_user = "tour+eiffel"
+
+    api_google = GoogleAPI(parser)
     assert api_google.input_parsed == "tour+eiffel"
 
 
 def test_mock_function_return_location_of_eiffel_tower(
-    setup_google_api, monkeypatch
+    setup_mocking_parser, monkeypatch
 ):
 
-    monkeypatch.setattr("app.googleapi.requests_get", mock_requests_get)
+    monkeypatch.setattr(
+        "app.googleapi.requests_get", mock_requests_get,
+    )
 
-    api_google = setup_google_api
-    assert api_google.location == (48.85837009999999, 2.2944813)
+    parser = setup_mocking_parser
+    parser.input_user = "musée+louvre"
+
+    api_google = GoogleAPI(parser)
+    assert api_google.location == (48.85837009999999, 2.2944813,)
 
 
-# Integration test
+############################# Integration test
 
-question_1 = "Bonjour ! Pourrais-je avoir la localisation de la Tour Eiffel ?"
-question_2 = "quelle est l'adresse du chateau de guédelon ?"
-question_3 = "Hi ! Je cherche la Citadelle de Belfort, pourrais-tu me trouver l'adresse ?"
-question_4 = "Je cherche OpenClassrooms, pourrais-tu me trouver l'adresse ?"
+sentence_and_coordinates = [
+    (
+        "Bonjour ! Pourrais-je avoir la localisation de le Citadelle de Besançon ?",
+        (47.2318894, 6.0317377),
+    ),
+    (
+        "Hello ! Qu'elle est l'adresse exacte du chateau de Guédelon ?",
+        (47.5833887, 3.1550422)
+    ),
+    (
+        "Hi ! Je cherche la Citadelle de Belfort, pourrais-tu me trouver l'endroit ?",
+        (47.636719, 6.8650283),
+    ),
+    (
+        "Ah! L'horloge astronomique de Besançon, j'aimerais y retourner ! Peux-tu me pointer l'endroit sur la carte ?",
+        (47.23358289999999, 6.0309017),
+    ),
+]
 
 
 @mark.parametrize(
-    "location, coordinates",
-    [
-        (question_1, (48.85837009999999, 2.2944813)),
-        (question_2, (47.5833887, 3.1550422)),
-        (question_3, (47.636719, 6.8650283)),
-        (question_4, (48.8748465, 2.3504873)),
-    ],
+    "location, coordinates", sentence_and_coordinates,
 )
 def test_location_return_correct_location_for_several_places(
-    location, coordinates
+    setup_parser, location, coordinates
 ):
 
-    parser = Parser()
+    parser = setup_parser
     parser.input_user = location
-    api_google = GoogleAPI(parser)
 
+    api_google = GoogleAPI(parser)
     assert api_google.location == coordinates
 
 
-# from app.googleapi import GoogleAPI
-# from pytest import fixture
+def test_exception_catch_for_an_unknown_place(setup_parser):
 
-# class MockParser:
-#     """Mocking Parser class."""
+    parser = setup_parser
+    parser.input_user = (
+        "Yop, donne moi les coordonnées du trou noir Sagitarius A*"
+    )
 
-#     def __init__(self):
+    api_google = GoogleAPI(parser)
 
-#         self._input_user = str()
-
-#     def parse(self):
-
-#         return self._input_user
-
-#     @property
-#     def input_user(self):
-#         return self._input_user
-
-#     @input_user.setter
-#     def input_user(self, input_user):
-#         self._input_user = str(input_user)
-
-
-# def test_google_api_take_a_parser_object():
-
-#     mock_parser = MockParser()
-#     mock_parser.input_user = "Tour+Eiffel"
-#     api_google = GoogleAPI(mock_parser)
-
-#     assert api_google.input_parsed == "Tour+Eiffel"
-
-# def test_google_api_location_eiffel_tower():
-
-#     mock_parser = MockParser()
-#     mock_parser.input_user = "Tour+Eiffel"
-#     api_google = GoogleAPI(mock_parser)
-
-#     assert api_google.location == (48.85837009999999, 2.2944813)
-
-# def test_google_api_location_louvre_museum():
-
-#     mock_parser = MockParser()
-#     mock_parser.input_user = "Musée+du+Louvre"
-#     api_google = GoogleAPI(mock_parser)
-
-#     assert api_google.location == (48.8606111, 2.337644)
+    with raises(UnknownPlaceError):
+        api_google.location

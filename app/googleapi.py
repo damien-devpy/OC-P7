@@ -1,6 +1,7 @@
 from os import environ
 from requests import get as requests_get
 from app.configuration import ENDPOINT_GOOGLE
+from app.unknownplaceerror import UnknownPlaceError
 
 
 class GoogleAPI:
@@ -39,8 +40,11 @@ class GoogleAPI:
 
         location = requests_get(f"{ENDPOINT_GOOGLE}", params=params).json()
 
-        lat = location["results"][0]["geometry"]["location"]["lat"]
-        lng = location["results"][0]["geometry"]["location"]["lng"]
+        try:
+            lat = location["results"][0]["geometry"]["location"]["lat"]
+            lng = location["results"][0]["geometry"]["location"]["lng"]
+        except IndexError as err:
+            raise UnknownPlaceError
 
         return lat, lng
 

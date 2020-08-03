@@ -1,0 +1,2 @@
+class UnknownPlaceError(Exception):
+    pass

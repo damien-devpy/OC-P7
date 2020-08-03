@@ -19,7 +19,7 @@ def test_parser_taking_an_input(setup_parser):
     assert parser.input_user == "this is an input made by an user"
 
 
-def test_parser_removes_special_character(setup_parser):
+def test_parser_removes_special_character(setup_parser,):
 
     parser = setup_parser
 
@@ -30,7 +30,7 @@ def test_parser_removes_special_character(setup_parser):
     assert string_without_spec_char == ""
 
 
-def test_parser_dont_removes_letters(setup_parser):
+def test_parser_dont_removes_letters(setup_parser,):
 
     parser = setup_parser
 
@@ -63,7 +63,7 @@ def test_parser_removes_stop_words(setup_parser):
     assert string_without_stop_words == ""
 
 
-def test_parser_still_removes_stop_words(setup_parser):
+def test_parser_still_removes_stop_words(setup_parser,):
 
     parser = setup_parser
 
@@ -74,7 +74,7 @@ def test_parser_still_removes_stop_words(setup_parser):
     assert string_without_stop_words == ""
 
 
-def test_parser_removes_spec_char_and_stop_words(setup_parser):
+def test_parser_removes_spec_char_and_stop_words(setup_parser,):
 
     parser = setup_parser
 
