@@ -1,7 +1,7 @@
 from flask import Flask, render_template
 from app.questionform import QuestionForm
 from app.parser import Parser
-from app.googleapi import GoogleAPI
+from app.location import Location
 from app.unknownplaceerror import UnknownPlaceError
 from os import environ
 
@@ -25,14 +25,12 @@ def page_not_found(e):
 
 def parsing_input_user(sentence):
 
-    parser = Parser()
-    parser.input_user = sentence
-
-    api_google = GoogleAPI(parser)
+    parser = Parser(sentence)
+    location = Location(parser)
 
     try:
-        current_location = api_google.location
+        location.get_location()
     except UnknownPlaceError as err:
         return "Je suis désolé, je n'ai pas bien compris. Peux-tu répéter ?"
 
-    return current_location, parser.parse()
+    return location.latitude, location.longitude, location._input_parsed

@@ -56,6 +56,6 @@ class Parser:
     def _remove_verb_in_the_location(self):
         """Remove verb (if exist) in the sentence."""
 
-        re_find_verb = r"[a-zA-Z]+(er|ir)$"
+        re_find_verb = r"\w+(er|ir)$|\w+(er|ir) "
 
         return re.sub(re_find_verb, "", self._input_user)

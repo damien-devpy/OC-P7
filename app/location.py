@@ -61,4 +61,3 @@ class Location:
     @property
     def longitude(self):
         return self._longitude
-    
