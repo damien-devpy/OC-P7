@@ -37,18 +37,18 @@ def test_parser_return_correct_string_without_preposition2():
 
 def test_parser_return_correct_string_without_preposition3():
 
-    parser = Parser("Dis moi, comment je me rends aux Catacombes de Paris ?")
+    parser = Parser("Dis moi, comment je me rends à la Place des Terreaux ?")
 
-    assert parser.parse() == "catacombes paris"
+    assert parser.parse() == "place terreaux"
 
 
 def test_parser_return_correct_string_without_verb():
 
     parser = Parser(
-        "Hey, connais-tu le Pont du Gard ? Pourrais-tu me donner l'adresse ?"
+        "Hey, connais-tu la Petite Sibérie ? Pourrais-tu me donner la localisation ?"
     )
 
-    assert parser.parse() == "pont gard"
+    assert parser.parse() == "petite sibérie"
 
 
 def test_parser_return_correct_string_without_verb2():
@@ -58,3 +58,17 @@ def test_parser_return_correct_string_without_verb2():
     )
 
     assert parser.parse() == "chouette dijon"
+
+
+def test_parser_manage_hard_sentence():
+
+    parser = Parser("Je cherche le Louvre, où est-ce que ça se trouve ?")
+
+    assert parser.parse() == "louvre"
+
+
+def test_parser_manage_hard_sentence2():
+
+    parser = Parser("Où se trouve l'Abbaye de Cluny ?")
+
+    assert parser.parse() == "abbaye cluny"

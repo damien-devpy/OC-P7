@@ -1,27 +1,20 @@
 from app.parser import Parser
-from app.googleapi import GoogleAPI
+from app.location import Location
 from app.unknownplaceerror import UnknownPlaceError
-from pytest import fixture, mark, raises
+from pytest import fixture, mark
+from pytest import raises as pytest_raises
 
 
 class MockParser:
     """Mocking Parser class."""
 
-    def __init__(self):
+    def __init__(self, input_user):
 
-        self._input_user = str()
+        self._input_user = input_user
 
     def parse(self):
 
         return self._input_user
-
-    @property
-    def input_user(self):
-        return self._input_user
-
-    @input_user.setter
-    def input_user(self, input_user):
-        self._input_user = input_user
 
 
 def mock_requests_get(*args, **kwargs):
@@ -57,42 +50,27 @@ def mock_requests_get(*args, **kwargs):
     return MockResponse()
 
 
-@fixture
-def setup_mocking_parser():
+def test_class_Location_can_take_a_parser_object():
 
-    parser = MockParser()
-    return parser
+    parser = MockParser("tour+eiffel")
 
+    place = Location(parser)
 
-@fixture
-def setup_parser():
-
-    parser = Parser()
-    return parser
+    assert place.input_parsed == "tour+eiffel"
 
 
-def test_class_google_api_can_take_a_parser_object(setup_mocking_parser):
-
-    parser = setup_mocking_parser
-    parser.input_user = "tour+eiffel"
-
-    api_google = GoogleAPI(parser)
-    assert api_google.input_parsed == "tour+eiffel"
-
-
-def test_mock_function_return_location_of_eiffel_tower(
-    setup_mocking_parser, monkeypatch
-):
+def test_mock_function_return_Location_of_eiffel_tower(monkeypatch):
 
     monkeypatch.setattr(
-        "app.googleapi.requests_get", mock_requests_get,
+        "app.location.requests_get", mock_requests_get,
     )
 
-    parser = setup_mocking_parser
-    parser.input_user = "musée+louvre"
+    parser = MockParser("musée+louvre")
 
-    api_google = GoogleAPI(parser)
-    assert api_google.location == (48.85837009999999, 2.2944813,)
+    place = Location(parser)
+    place.get_location()
+
+    assert place.latitude, place.longitude == (48.85837009999999, 2.2944813,)
 
 
 ############################# Integration test
@@ -120,25 +98,25 @@ sentence_and_coordinates = [
 @mark.parametrize(
     "location, coordinates", sentence_and_coordinates,
 )
-def test_location_return_correct_location_for_several_places(
-    setup_parser, location, coordinates
+def test_Location_return_correct_Location_for_several_places(
+    location, coordinates
 ):
 
-    parser = setup_parser
-    parser.input_user = location
+    parser = Parser(location)
 
-    api_google = GoogleAPI(parser)
-    assert api_google.location == coordinates
+    place = Location(parser)
+    place.get_location()
+
+    assert place.latitude, place.longitude == coordinates
 
 
-def test_exception_catch_for_an_unknown_place(setup_parser):
+def test_exception_catch_for_an_unknown_place():
 
-    parser = setup_parser
-    parser.input_user = (
+    parser = Parser(
         "Yop, donne moi les coordonnées du trou noir Sagitarius A*"
     )
 
-    api_google = GoogleAPI(parser)
+    place = Location(parser)
 
-    with raises(UnknownPlaceError):
-        api_google.location
+    with pytest_raises(UnknownPlaceError):
+        place.get_location()

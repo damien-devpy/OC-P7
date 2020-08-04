@@ -4,7 +4,7 @@ from app.configuration import ENDPOINT_GOOGLE
 from app.unknownplaceerror import UnknownPlaceError
 
 
-class GoogleAPI:
+class Location:
     """Manage Google API."""
 
     def __init__(self, parser_object):
@@ -21,8 +21,10 @@ class GoogleAPI:
         """
 
         self._input_parsed = parser_object.parse()
+        self._latitude = None
+        self._longitude = None
 
-    def _location(self):
+    def get_location(self):
         """Call Google geocoding API.
 
         Send a parsed input and receive coordinates.
@@ -46,12 +48,17 @@ class GoogleAPI:
         except IndexError as err:
             raise UnknownPlaceError
 
-        return lat, lng
+        self._latitude, self._longitude = lat, lng
 
     @property
     def input_parsed(self):
         return self._input_parsed
 
     @property
-    def location(self):
-        return self._location()
+    def latitude(self):
+        return self._latitude
+
+    @property
+    def longitude(self):
+        return self._longitude
+    
