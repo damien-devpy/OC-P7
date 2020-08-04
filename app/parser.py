@@ -1,26 +1,35 @@
 import re
 from app.configuration import STOPWORDS
 
+
 class Parser:
+    """Parse input user."""
 
     def __init__(self, input_user):
+        """Create a parser object.
 
-        self._input_user = str(input_user).lower()
+        Attribute:
+            self._input_user (str): Contain a user input
+
+        """
+
+        self._input_user = input_user.lower()
 
     def parse(self):
         """Parse an input user.
 
         Returns:
 
-            input_parsed (str): User input parsed
+            self._input_user (str): User input parsed
 
         """
 
-        input_parsed = self._find_preposition()
+        self._input_user = self._find_preposition()
+        self._input_user = self._remove_special_characters()
+        self._input_user = self._remove_stop_words()
+        self._input_user = self._remove_verb_in_the_location()
 
-        input_parsed = self._remove_special_characters(input_parsed)
-
-        return input_parsed
+        return self._input_user.strip()
 
     def _find_preposition(self):
         """Find preposition in a french sentence.
@@ -32,24 +41,29 @@ class Parser:
             sentence (str): Part of the sentence after the preposition
 
         """
-        re_preposition = r'd[eu] .*|l[ae] .*'
+        re_preposition = r" [àa][u] ?.*| d[eu] ?.*| l[ae] ?.*"
 
-        sentence = re.search(re_preposition, self._input_user)[0]
+        return re.search(re_preposition, self._input_user)[0]
 
-        return sentence
+    def _remove_special_characters(self):
+        """Find and remove special characters."""
 
-    def _remove_special_characters(self, sentence):
-        """Find and remove special characters.
+        re_special_characters = r"\W"
 
-        Returns:
+        return re.sub(re_special_characters, " ", self._input_user)
 
-            string (str): String without special characters
+    def _remove_stop_words(self):
+        """Split a sentence and removes stop words."""
 
-        """
-
-        re_special_characters = r'\W'
-
-        string = re.sub(re_special_characters, ' ', sentence).split()
-        string = " ".join(word for word in string[:] if word not in STOPWORDS)
+        string = " ".join(
+            word for word in self._input_user.split() if word not in STOPWORDS
+        )
 
         return string
+
+    def _remove_verb_in_the_location(self):
+        """Remove verb (if exist) in the sentence."""
+
+        re_find_verb = r"[a-zA-Z]+(er|ir|re)"
+
+        return re.sub(re_find_verb, "", self._input_user)

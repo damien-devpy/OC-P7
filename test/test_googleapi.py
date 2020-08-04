@@ -104,7 +104,7 @@ sentence_and_coordinates = [
     ),
     (
         "Hello ! Qu'elle est l'adresse exacte du chateau de Guédelon ?",
-        (47.5833887, 3.1550422)
+        (47.5833887, 3.1550422),
     ),
     (
         "Hi ! Je cherche la Citadelle de Belfort, pourrais-tu me trouver l'endroit ?",
