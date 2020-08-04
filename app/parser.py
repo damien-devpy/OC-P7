@@ -1,62 +1,55 @@
-from re import sub
+import re
 from app.configuration import STOPWORDS
 
-
 class Parser:
-    """Parse input user."""
 
-    def __init__(self):
-        """Create a parser object.
+    def __init__(self, input_user):
 
-        Attribute:
-            self._input_user (str): Contain a user input
-
-        """
-
-        self._input_user = str()
+        self._input_user = str(input_user).lower()
 
     def parse(self):
         """Parse an input user.
 
-        Removes special characters and stop words.
+        Returns:
+
+            input_parsed (str): User input parsed
+
+        """
+
+        input_parsed = self._find_preposition()
+
+        input_parsed = self._remove_special_characters(input_parsed)
+
+        return input_parsed
+
+    def _find_preposition(self):
+        """Find preposition in a french sentence.
+
+        And return the part after it.
 
         Returns:
 
-            self._input_user (str): User input parsed
+            sentence (str): Part of the sentence after the preposition
+
+        """
+        re_preposition = r'd[eu] .*|l[ae] .*'
+
+        sentence = re.search(re_preposition, self._input_user)[0]
+
+        return sentence
+
+    def _remove_special_characters(self, sentence):
+        """Find and remove special characters.
+
+        Returns:
+
+            string (str): String without special characters
 
         """
 
-        self._remove_special_characters()
-        self._remove_stop_words()
+        re_special_characters = r'\W'
 
-        return self._input_user
+        string = re.sub(re_special_characters, ' ', sentence).split()
+        string = " ".join(word for word in string[:] if word not in STOPWORDS)
 
-    def _remove_special_characters(self):
-        """Removes special characters from a sentence.
-
-        Private method acting on self._input_user.
-
-        """
-
-        self._input_user = sub(r"\W", " ", self._input_user)
-
-    def _remove_stop_words(self):
-        """Removes stop words from a sentence.
-
-        Private method acting on self._input_user.
-
-        """
-
-        sentence = [
-            word for word in self._input_user.split() if word not in STOPWORDS
-        ]
-
-        self._input_user = "+".join(sentence)
-
-    @property
-    def input_user(self):
-        return self._input_user
-
-    @input_user.setter
-    def input_user(self, input_user):
-        self._input_user = str(input_user).lower()
+        return string

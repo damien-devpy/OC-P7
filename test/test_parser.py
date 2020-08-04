@@ -1,111 +1,32 @@
 from app.parser import Parser
-from pytest import fixture
 
 
-@fixture
-def setup_parser():
+def test_parser_return_correct_string():
 
-    parser = Parser()
+    parser = Parser("Bonjour ! Pourrais-je avoir la localisation de la Tour Eiffel ?")
 
-    return parser
+    assert parser.parse() == "tour eiffel"
 
+def test_parser_return_correct_string2():
 
-def test_parser_taking_an_input(setup_parser):
+    parser = Parser("Hello ! J'aurais besoin de l'adresse du Musée du Louvre.")
 
-    parser = setup_parser
+    assert parser.parse() == "musée louvre"
 
-    parser.input_user = "This is an input made by an user"
+def test_parser_return_correct_string_without_preposition():
 
-    assert parser.input_user == "this is an input made by an user"
+    parser = Parser("Où est la citadelle de besancon ?")
 
+    assert parser.parse() == "citadelle besancon"
 
-def test_parser_removes_special_character(setup_parser,):
+def test_parser_return_correct_string_without_preposition2():
 
-    parser = setup_parser
+    parser = Parser("Peux-tu chercher l'endroit où se trouve le pont du gard")
 
-    parser.input_user = "#@*$%*"
+    assert parser.parse() == "pont gard"
 
-    string_without_spec_char = parser.parse()
+def test_parser_return_correct_string_without_preposition3():
 
-    assert string_without_spec_char == ""
+    parser = Parser("Dis moi, comment je me rends aux Catacombes de Paris ?")
 
-
-def test_parser_dont_removes_letters(setup_parser,):
-
-    parser = setup_parser
-
-    parser.input_user = "#@*$%*musée"
-
-    string_without_spec_char = parser.parse()
-
-    assert string_without_spec_char == "musée"
-
-
-def test_parser_manage_numbers(setup_parser):
-
-    parser = setup_parser
-
-    parser.input_user = 42
-
-    string_parsed = parser.parse()
-
-    assert string_parsed == "42"
-
-
-def test_parser_removes_stop_words(setup_parser):
-
-    parser = setup_parser
-
-    parser.input_user = "Bonjour, je tu il nous vous ils"
-
-    string_without_stop_words = parser.parse()
-
-    assert string_without_stop_words == ""
-
-
-def test_parser_still_removes_stop_words(setup_parser,):
-
-    parser = setup_parser
-
-    parser.input_user = "ils Nous Aurait Vous Ils Dans"
-
-    string_without_stop_words = parser.parse()
-
-    assert string_without_stop_words == ""
-
-
-def test_parser_removes_spec_char_and_stop_words(setup_parser,):
-
-    parser = setup_parser
-
-    parser.input_user = (
-        "Bonjour, je voudrais la localisation de la Tour Eiffel !"
-    )
-
-    string_parsed = parser.parse()
-
-    assert string_parsed == "tour+eiffel"
-
-
-def test_parser_another_sentence(setup_parser):
-
-    parser = setup_parser
-
-    parser.input_user = "Quelle est l'adresse du Chateau de Guédelon ?"
-
-    string_parsed = parser.parse()
-
-    assert string_parsed == "chateau+guédelon"
-
-
-def test_parser_another_sentence_2(setup_parser):
-
-    parser = setup_parser
-
-    parser.input_user = (
-        "Hello ! J'aurais besoin de l'adresse du Musée du Louvre."
-    )
-
-    string_parsed = parser.parse()
-
-    assert string_parsed == "musée+louvre"
+    assert parser.parse() == "catacombes paris"
