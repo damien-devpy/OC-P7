@@ -1,5 +1,9 @@
 ENDPOINT_GOOGLE = "https://maps.googleapis.com/maps/api/geocode/json"
 
+ENDPOINT_WIKIMEDIA = "https://fr.wikipedia.org/w/api.php"
+
+URL_WIKIPEDIA = "https://fr.wikipedia.org/w/index.php?curid="
+
 STOPWORDS = {
     "a",
     "abord",

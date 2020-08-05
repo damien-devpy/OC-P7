@@ -42,7 +42,8 @@ def mock_requests_get(*args, **kwargs):
                             }
                         }
                     }
-                ]
+                ],
+                "status": "OK"
             }
 
             return mock_results
@@ -52,11 +53,11 @@ def mock_requests_get(*args, **kwargs):
 
 def test_class_Location_can_take_a_parser_object():
 
-    parser = MockParser("tour+eiffel")
+    parser = MockParser("tour%20eiffel")
 
     place = Location(parser)
 
-    assert place.input_parsed == "tour+eiffel"
+    assert place._input_parsed == "tour%20eiffel"
 
 
 def test_mock_function_return_Location_of_eiffel_tower(monkeypatch):
@@ -65,7 +66,7 @@ def test_mock_function_return_Location_of_eiffel_tower(monkeypatch):
         "app.location.requests_get", mock_requests_get,
     )
 
-    parser = MockParser("musée+louvre")
+    parser = MockParser("musée%20louvre")
 
     place = Location(parser)
     place.get_location()
@@ -113,7 +114,7 @@ def test_Location_return_correct_Location_for_several_places(
 def test_exception_catch_for_an_unknown_place():
 
     parser = Parser(
-        "Yop, donne moi les coordonnées du trou noir Sagitarius A*"
+        "Yop, donne moi les coordonnées du trou noir Sagittarius A*"
     )
 
     place = Location(parser)

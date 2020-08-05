@@ -72,3 +72,17 @@ def test_parser_manage_hard_sentence2():
     parser = Parser("Où se trouve l'Abbaye de Cluny ?")
 
     assert parser.parse() == "abbaye cluny"
+
+
+def test_parser_manage_a_location_without_sentence():
+
+    parser = Parser("Abbaye Saint Philibert")
+
+    assert parser.parse() == "abbaye saint philibert"
+
+
+def test_parser_manage_a_location_without_sentence2():
+
+    parser = Parser("Saut du Doubs")
+
+    assert parser.parse() == "saut doubs"

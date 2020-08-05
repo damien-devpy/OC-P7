@@ -5,10 +5,13 @@ from app.unknownplaceerror import UnknownPlaceError
 
 
 class Location:
-    """Manage Google API."""
+    """Represent a physical location, with coordinates."""
 
     def __init__(self, parser_object):
-        """Create an object calling for the API.
+        """Create a location object.
+
+        Manage an input user that has been parsed and get his geographical
+            coordinates through the Geocoding Google API.
 
         Args:
 
@@ -17,6 +20,10 @@ class Location:
         Attribute:
 
             self._input_parsed (str): User input parsed
+            self._latitude (float): Contain latitude coordinates for a place. 
+                Default to None.
+            self._longitude (float): Contain longitude coordinates for a place.
+                Default to None.
 
         """
 
@@ -27,11 +34,8 @@ class Location:
     def get_location(self):
         """Call Google geocoding API.
 
-        Send a parsed input and receive coordinates.
-
-        Returns:
-
-            coordinates (tuple): Pair of float coordinates like (latitude, longitude)
+        Send a parsed input, receive coordinates and set self._latitude
+        and self._longitude.
 
         """
 
@@ -41,18 +45,14 @@ class Location:
         }
 
         location = requests_get(f"{ENDPOINT_GOOGLE}", params=params).json()
-
-        try:
+        if location["status"] == "OK":
             lat = location["results"][0]["geometry"]["location"]["lat"]
             lng = location["results"][0]["geometry"]["location"]["lng"]
-        except IndexError as err:
+
+            self._latitude, self._longitude = lat, lng
+
+        elif location["status"] == "ZERO_RESULTS":
             raise UnknownPlaceError
-
-        self._latitude, self._longitude = lat, lng
-
-    @property
-    def input_parsed(self):
-        return self._input_parsed
 
     @property
     def latitude(self):
