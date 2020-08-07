@@ -106,6 +106,10 @@ sentence_extracts_url = [
         "L'Horloge astronomique de la cathédrale Saint-Jean de Besançon est une horloge astronomique considérée comme un chef-d'œuvre du genre, construite par Auguste-Lucien Vérité au XIXe siècle. Elle fait suite à l'horloge astronomique de Constant Flavien Bernardin, construite vers 1850-1855, au fonctionnement compliqué et défectueux, disparue (ou intégrée dans celle de Vérité) vers 1860.",
         "https://fr.wikipedia.org/w/index.php?curid=945824"
     ),
+    (
+        "Salut ! Je voudrais toucher la Chouette de Dijon mais je n'arrive pas à la trouver. Où est-elle ?",
+        "L’église Notre-Dame de Dijon, considérée comme un chef-d'œuvre d'architecture gothique du XIIIe siècle, est située au cœur des 97 hectares du secteur sauvegardé de Dijon, inscrit depuis le 4 juillet 2015 au patrimoine mondial de l'UNESCO. Elle s'élève place Notre-Dame, à proximité du Palais des ducs et des États de Bourgogne et en face de la rue Musette. On estime que l'édifice actuel a été construit des années 1220 aux années 1250 environ.\nCette église abrite la statue de Notre-Dame de Bon-Espoir, auparavant appelée Vierge noire. Elle s'orne aussi de deux symboles de la ville de Dijon : le Jacquemart et la chouette.\nL'église a été classée au titre des monuments historiques par la liste de 1840.\nLa chapelle de l'Assomption, la sacristie et la galerie les reliant à l'église sont inscrites au titre des monuments historiques depuis le 5 juillet 2002.",
+        "https://fr.wikipedia.org/w/index.php?curid=1918775")
 ]
 
 @mark.parametrize("input_user, extract_place, url_place", sentence_extracts_url)

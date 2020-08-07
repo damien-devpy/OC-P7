@@ -34,7 +34,7 @@ class Parser:
     def _find_preposition(self):
         """Find preposition in a french sentence."""
 
-        re_preposition = r" [àa][u] ?.*| l[ae'] ?.*"
+        re_preposition = r" [àa]u ?.*| l[ae'] ?.*"
 
         sentence = re.search(re_preposition, self._input_user)
 

@@ -4,6 +4,22 @@ ENDPOINT_WIKIMEDIA = "https://fr.wikipedia.org/w/api.php"
 
 URL_WIKIPEDIA = "https://fr.wikipedia.org/w/index.php?curid="
 
+PARAMS_GEOSEARCH = {
+    "action": "query",
+    "list": "geosearch",
+    "gscoord": "",
+    "format": "json",
+}
+
+PARAMS_EXTRACT = {
+    "action": "query",
+    "prop": "extracts",
+    "exintro": "True",
+    "explaintext": "True",
+    "titles": "",
+    "format": "json",
+}
+
 STOPWORDS = {
     "a",
     "abord",
