@@ -12,9 +12,7 @@ def test_parser_return_correct_string():
 
 def test_parser_return_correct_string2():
 
-    parser = Parser(
-        "Hello ! J'aurais besoin de l'adresse du Chateau de Guédelon"
-    )
+    parser = Parser("Hello ! J'aurais besoin de l'adresse du Chateau de Guédelon")
 
     assert parser.parse() == "chateau guédelon"
 
@@ -28,9 +26,7 @@ def test_parser_return_correct_string_without_preposition():
 
 def test_parser_return_correct_string_without_preposition2():
 
-    parser = Parser(
-        "Peux-tu m'indiquer où aller pour trouver le Parc des Cévènnes"
-    )
+    parser = Parser("Peux-tu m'indiquer où aller pour trouver le Parc des Cévènnes")
 
     assert parser.parse() == "parc cévènnes"
 
@@ -53,9 +49,7 @@ def test_parser_return_correct_string_without_verb():
 
 def test_parser_return_correct_string_without_verb2():
 
-    parser = Parser(
-        "Je galère à trouver la Chouette de Dijon, tu peux m'aider ?"
-    )
+    parser = Parser("Je galère à trouver la Chouette de Dijon, tu peux m'aider ?")
 
     assert parser.parse() == "chouette dijon"
 

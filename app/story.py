@@ -1,11 +1,17 @@
-from app.configuration import ENDPOINT_WIKIMEDIA, URL_WIKIPEDIA, PARAMS_GEOSEARCH, PARAMS_EXTRACT
+from app.configuration import (
+    ENDPOINT_WIKIMEDIA,
+    URL_WIKIPEDIA,
+    PARAMS_GEOSEARCH,
+    PARAMS_EXTRACT,
+)
 from requests import get as requests_get
+
 
 class Story:
     """Represent story about a physical place."""
 
     def __init__(self, location_object):
-        """Create a story object. 
+        """Create a story object.
 
         Contain coordinates, story and url to the location.
 
@@ -31,11 +37,7 @@ class Story:
         self._url = None
 
     def about(self):
-        """Calling for the Wikimedia API.
-
-        Get an extract intro from page of the given location and set his url.
-
-        """
+        """Calling for the Wikimedia API."""
 
         page_id, page_title = self._get_url()
         self._get_extract(page_id, page_title)
@@ -63,12 +65,9 @@ class Story:
 
         PARAMS_EXTRACT["titles"] = f"{page_title}"
 
-        extract = requests_get(
-            f"{ENDPOINT_WIKIMEDIA}", params=PARAMS_EXTRACT
-        ).json()
+        extract = requests_get(f"{ENDPOINT_WIKIMEDIA}", params=PARAMS_EXTRACT).json()
 
         self._extract = extract["query"]["pages"][f"{page_id}"]["extract"]
-
 
     @property
     def extract(self):

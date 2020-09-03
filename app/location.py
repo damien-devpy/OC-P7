@@ -1,7 +1,8 @@
 from os import environ
-from requests import get as requests_get
+
 from app.configuration import ENDPOINT_GOOGLE
 from app.unknownplaceerror import UnknownPlaceError
+from requests import get as requests_get
 
 
 class Location:
@@ -20,7 +21,7 @@ class Location:
         Attribute:
 
             self._input_parsed (str): User input parsed
-            self._latitude (float): Contain latitude coordinates for a place. 
+            self._latitude (float): Contain latitude coordinates for a place.
                 Default to None.
             self._longitude (float): Contain longitude coordinates for a place.
                 Default to None.

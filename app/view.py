@@ -1,10 +1,11 @@
-from flask import Flask, render_template
-from app.questionform import QuestionForm
-from app.parser import Parser
+from os import environ
+
 from app.location import Location
+from app.parser import Parser
+from app.questionform import QuestionForm
 from app.story import Story
 from app.unknownplaceerror import UnknownPlaceError
-from os import environ
+from flask import Flask, render_template, request
 
 app = Flask(__name__)
 app.config["SECRET_KEY"] = environ.get("SECRET_KEY_FLASK")
@@ -14,8 +15,8 @@ app.config["SECRET_KEY"] = environ.get("SECRET_KEY_FLASK")
 def index():
     sentence = None
     form = QuestionForm()
-    if form.validate_on_submit():
-        sentence = parsing_input_user(form.name.data)
+    if request.method == "POST":
+        sentence = parsing_input_user(request.json["input"])
     return render_template("index.html", form=form, sentence=sentence)
 
 
@@ -31,7 +32,7 @@ def parsing_input_user(sentence):
 
     try:
         location.get_location()
-    except UnknownPlaceError as err:
+    except UnknownPlaceError:
         return "Je suis désolé, je n'ai pas bien compris. Peux-tu répéter ?"
 
     story = Story(location)

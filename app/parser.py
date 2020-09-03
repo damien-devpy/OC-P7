@@ -1,4 +1,5 @@
 import re
+
 from app.configuration import STOPWORDS
 
 

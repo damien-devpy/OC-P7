@@ -1,11 +1,32 @@
-<h1>Welcome at Harold's, GranPy Bot!</h1>
+<!DOCTYPE html>
+<html lang="fr">
+    <head>
+        <meta charset="utf-8">
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/index.css') }}" />
+        <script async src="{{ url_for ('static', filename='scripts/main.js') }}"></script>
+        <title>At Harold's, GranPy Bot</title>
+    </head>
+    <body>
 
-<form method="POST">
-    {{ form.hidden_tag() }}
-    {{ form.name.label }} 
-    {{ form.name() }}
-    {{ form.submit() }}
-    {% if sentence %}
-    {{ sentence }}
-    {% endif %}
-</form>
+        <header>
+            <h1>Chez Harold, Papy Robot</h1>
+        </header>
+
+        <section>
+            <form method="POST" class="granpyForm">
+                {{ form.hidden_tag() }}
+                {{ form.name.label }} 
+                {{ form.name(class="textbox") }}
+                {{ form.submit(class="button") }}
+                {% if sentence %}
+                {{ sentence }}
+                {% endif %}
+            </form>
+        </section>
+
+        <footer>
+        
+        </footer>
+
+    </body>
+</html>

@@ -43,7 +43,7 @@ def mock_requests_get(*args, **kwargs):
                         }
                     }
                 ],
-                "status": "OK"
+                "status": "OK",
             }
 
             return mock_results
@@ -63,7 +63,8 @@ def test_class_Location_can_take_a_parser_object():
 def test_mock_function_return_Location_of_eiffel_tower(monkeypatch):
 
     monkeypatch.setattr(
-        "app.location.requests_get", mock_requests_get,
+        "app.location.requests_get",
+        mock_requests_get,
     )
 
     parser = MockParser("musée%20louvre")
@@ -71,7 +72,10 @@ def test_mock_function_return_Location_of_eiffel_tower(monkeypatch):
     place = Location(parser)
     place.get_location()
 
-    assert place.latitude, place.longitude == (48.85837009999999, 2.2944813,)
+    assert place.latitude, place.longitude == (
+        48.85837009999999,
+        2.2944813,
+    )
 
 
 ############################# Integration test
@@ -97,11 +101,10 @@ sentence_and_coordinates = [
 
 
 @mark.parametrize(
-    "location, coordinates", sentence_and_coordinates,
+    "location, coordinates",
+    sentence_and_coordinates,
 )
-def test_Location_return_correct_Location_for_several_places(
-    location, coordinates
-):
+def test_Location_return_correct_Location_for_several_places(location, coordinates):
 
     parser = Parser(location)
 
@@ -113,9 +116,7 @@ def test_Location_return_correct_Location_for_several_places(
 
 def test_exception_catch_for_an_unknown_place():
 
-    parser = Parser(
-        "Yop, donne moi les coordonnées du trou noir Sagittarius A*"
-    )
+    parser = Parser("Yop, donne moi les coordonnées du trou noir Sagittarius A*")
 
     place = Location(parser)
 
