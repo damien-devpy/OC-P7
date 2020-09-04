@@ -1,25 +1,63 @@
-from test.mocklocation import MockLocation
-from test.mockparser import MockParser
-from test.mockrequest import mock_requests_get_story
+def mock_requests_get_location(*args, **kwargs):
+    """Mock requests get method.
 
-from app.story import Story
+    Return a MockResponse object.
+
+    """
+
+    class MockResponse:
+        """Mock the Response object return by requests get method."""
+
+        def __init__(self):
+            pass
+
+        def json(self):
+
+            mock_results = {
+                "results": [
+                    {
+                        "geometry": {
+                            "location": {
+                                "lat": 48.85837009999999,
+                                "lng": 2.2944813,
+                            }
+                        }
+                    }
+                ],
+                "status": "OK",
+            }
+
+            return mock_results
+
+    return MockResponse()
 
 
-def test_mock_story_return_correct_extract_and_url(monkeypatch):
+def mock_requests_get_story(*args, **kwargs):
+    """Mock requests get method.
 
-    monkeypatch.setattr("app.story.requests_get", mock_requests_get_story)
+    Return a MockResponse object.
 
-    mock_parser = MockParser("Tour Eiffel")
+    """
 
-    mock_location = MockLocation(mock_parser)
+    class MockResponse:
+        """Mock the Response object return by requests get method."""
 
-    story = Story(mock_location)
+        def __init__(self, **kwargs):
+            self._kwargs = kwargs
 
-    story.about()
+        def json(self):
 
-    assert (
-        story.extract
-        == """La tour Eiffel  est une tour de fer
+            result_geosearch = {
+                "query": {
+                    "geosearch": [{"pageid": 1359783, "title": "Tour Eiffel"}]
+                }
+            }
+
+            result_extract = {
+                "query": {
+                    "pages": {
+                        "1359783": {
+                            "extract": """La tour Eiffel  est une tour de fer
                             puddlé de 324 mètres de hauteur (avec antennes)
                             située à Paris, à l’extrémité nord-ouest du parc
                             du Champ-de-Mars en bordure de la Seine dans le 7e
@@ -48,6 +86,16 @@ def test_mock_story_return_correct_extract_and_url(monkeypatch):
                             pour de nombreuses expériences scientifiques,
                             elle sert aujourd’hui d’émetteur de programmes
                             radiophoniques et télévisés.\n\n"""
-    )
+                        }
+                    }
+                }
+            }
 
-    assert story.url == "https://fr.wikipedia.org/w/index.php?curid=1359783"
+            if self._kwargs["params"].get("list") == "geosearch":
+                # Return a result for a geosearch query
+                return result_geosearch
+            else:
+                # Return a result for an extract from wikipedia page
+                return result_extract
+
+    return MockResponse(**kwargs)

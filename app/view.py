@@ -1,3 +1,4 @@
+from json import dumps
 from os import environ
 
 from app.location import Location
@@ -15,9 +16,14 @@ app.config["SECRET_KEY"] = environ.get("SECRET_KEY_FLASK")
 def index():
     sentence = None
     form = QuestionForm()
-    if request.method == "POST":
-        sentence = parsing_input_user(request.json["input"])
-    return render_template("index.html", form=form, sentence=sentence)
+    if request.method == "GET":
+        return render_template("index.html", form=form, sentence=sentence)
+    elif (
+        request.method == "POST"
+    ):  # INSERT managment empty query (Random sentence from GranPy for empty queries)
+        infos = get_infos(request.json["sentence"])
+        infos_into_JSON = turn_into_JSON(*infos)
+        return infos_into_JSON, 200
 
 
 @app.errorhandler(404)
@@ -25,16 +31,31 @@ def page_not_found(e):
     return render_template("404.html")
 
 
-def parsing_input_user(sentence):
+def get_infos(sentence):
+    """Parse an input sentence and try to get infos from it, coordinates,
+    extract from Wikipedia and url."""
 
     parser = Parser(sentence)
     location = Location(parser)
 
     try:
         location.get_location()
-    except UnknownPlaceError:
+    except UnknownPlaceError:  # INSERT random system for unknown location
         return "Je suis désolé, je n'ai pas bien compris. Peux-tu répéter ?"
 
     story = Story(location)
     story.about()
     return location.latitude, location.longitude, story.extract, story.url
+
+
+def turn_into_JSON(latitude, longitude, extract, url):
+    """Turn coordinates of place and wikipedia informations into JSON data."""
+
+    infos = {
+        "latitude": latitude,
+        "longitude": longitude,
+        "extract": extract,
+        "url": url,
+    }
+
+    return dumps(infos)

@@ -1,82 +1,69 @@
 from app.parser import Parser
+from pytest import mark
+
+sentence_and_parsing = [
+    (
+        """"Salut GrandPy, donne moi l'adresse de l'Horloge Astronomique de
+        Besançon !""",
+        "horloge astronomique besançon",
+    ),
+    (
+        """Hello ! J'aurais besoin de l'adresse du Chateau de Guédelon,
+        merci !""",
+        "chateau guédelon",
+    ),
+    (
+        """Hi ! Je cherche la Citadelle de Belfort, pourrais-tu me trouver
+        l'endroit ?""",
+        "citadelle belfort",
+    ),
+    (
+        "Où est la citadelle de besancon ?",
+        "citadelle besancon",
+    ),
+    (
+        "Peux-tu m'indiquer où aller pour trouver le Parc des Cévènnes",
+        "parc cévènnes",
+    ),
+    (
+        """Hey, connais-tu la Petite Sibérie ? Pourrais-tu me donner la
+        localisation ?""",
+        "petite sibérie",
+    ),
+    (
+        "Je galère à trouver la Chouette de Dijon, tu peux m'aider ?",
+        "chouette dijon",
+    ),
+    (
+        "Dis moi, comment je me rends à la Place des Terreaux ?",
+        "place terreaux",
+    ),
+    (
+        "Où se trouve l'Abbaye de Cluny ?",
+        "abbaye cluny",
+    ),
+    (
+        "Abbaye Saint Philibert",
+        "abbaye saint philibert",
+    ),
+    (
+        "Saut du Doubs",
+        "saut doubs",
+    ),
+    (
+        "Salut granpy, peux tu me trouver la ville de Dijon ?",
+        "ville dijon",
+    ),
+    (
+        "J'aimerais avoir l'adresse de la ville de brest",
+        "ville brest",
+    ),
+]
 
 
-def test_parser_return_correct_string():
+@mark.parametrize("sentence, sentence_parsed", sentence_and_parsing)
+def test_parser_return_expected_string(sentence, sentence_parsed):
 
-    parser = Parser(
-        "Salut GrandPy, donne moi l'adresse de l'Horloge Astronomique de Besançon !"
-    )
+    parser = Parser(sentence)
 
-    assert parser.parse() == "horloge astronomique besançon"
-
-
-def test_parser_return_correct_string2():
-
-    parser = Parser("Hello ! J'aurais besoin de l'adresse du Chateau de Guédelon")
-
-    assert parser.parse() == "chateau guédelon"
-
-
-def test_parser_return_correct_string_without_preposition():
-
-    parser = Parser("Où est la citadelle de besancon ?")
-
-    assert parser.parse() == "citadelle besancon"
-
-
-def test_parser_return_correct_string_without_preposition2():
-
-    parser = Parser("Peux-tu m'indiquer où aller pour trouver le Parc des Cévènnes")
-
-    assert parser.parse() == "parc cévènnes"
-
-
-def test_parser_return_correct_string_without_preposition3():
-
-    parser = Parser("Dis moi, comment je me rends à la Place des Terreaux ?")
-
-    assert parser.parse() == "place terreaux"
-
-
-def test_parser_return_correct_string_without_verb():
-
-    parser = Parser(
-        "Hey, connais-tu la Petite Sibérie ? Pourrais-tu me donner la localisation ?"
-    )
-
-    assert parser.parse() == "petite sibérie"
-
-
-def test_parser_return_correct_string_without_verb2():
-
-    parser = Parser("Je galère à trouver la Chouette de Dijon, tu peux m'aider ?")
-
-    assert parser.parse() == "chouette dijon"
-
-
-def test_parser_manage_hard_sentence():
-
-    parser = Parser("Je cherche le Louvre, où est-ce que ça se trouve ?")
-
-    assert parser.parse() == "louvre"
-
-
-def test_parser_manage_hard_sentence2():
-
-    parser = Parser("Où se trouve l'Abbaye de Cluny ?")
-
-    assert parser.parse() == "abbaye cluny"
-
-
-def test_parser_manage_a_location_without_sentence():
-
-    parser = Parser("Abbaye Saint Philibert")
-
-    assert parser.parse() == "abbaye saint philibert"
-
-
-def test_parser_manage_a_location_without_sentence2():
-
-    parser = Parser("Saut du Doubs")
-
-    assert parser.parse() == "saut doubs"
+    assert parser.parse() == sentence_parsed

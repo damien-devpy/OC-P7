@@ -25,23 +25,10 @@ class Parser:
 
         """
 
-        self._find_preposition()
         self._remove_special_characters()
         self._remove_stop_words()
-        self._remove_verb_in_the_location()
 
         return self._input_user.strip()
-
-    def _find_preposition(self):
-        """Find preposition in a french sentence."""
-
-        re_preposition = r" [àa]u ?.*| l[ae'] ?.*"
-
-        sentence = re.search(re_preposition, self._input_user)
-
-        self._input_user = (
-            sentence[0] if sentence is not None else self._input_user
-        )
 
     def _remove_special_characters(self):
         """Find and remove special characters."""
@@ -58,10 +45,3 @@ class Parser:
         )
 
         self._input_user = string
-
-    def _remove_verb_in_the_location(self):
-        """Remove verb (if exist) in the sentence."""
-
-        re_find_verb = r"\w+(er|ir)$|\w+(er|ir) "
-
-        self._input_user = re.sub(re_find_verb, "", self._input_user)
