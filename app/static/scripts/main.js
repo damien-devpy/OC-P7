@@ -1,5 +1,6 @@
 import { InputUser } from './modules/InputUser.js'
 import { Response } from './modules/Response.js'
+import { GglMap } from './modules/GglMap.js'
 
 const submitForm = document.body.querySelector('.granpyForm')
 
@@ -22,6 +23,12 @@ function onSubmit () {
     newParagraph.textContent = [response.getLatitude(), response.getLongitude(), response.getExtract(), response.getUrl()]
 
     document.body.append(newParagraph)
+
+    const map = new GglMap(response)
+    map.addScriptMap()
+    map.addScriptCallAPI()
+
+    // map.deleteMap()
   }
 
   xhr.onerror = function () {
