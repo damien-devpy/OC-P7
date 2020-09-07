@@ -1,9 +1,5 @@
-from app.configuration import (
-    ENDPOINT_WIKIMEDIA,
-    URL_WIKIPEDIA,
-    PARAMS_GEOSEARCH,
-    PARAMS_EXTRACT,
-)
+from app.configuration import (ENDPOINT_WIKIMEDIA, PARAMS_EXTRACT,
+                               PARAMS_GEOSEARCH, URL_WIKIPEDIA)
 from requests import get as requests_get
 
 
@@ -65,7 +61,9 @@ class Story:
 
         PARAMS_EXTRACT["titles"] = f"{page_title}"
 
-        extract = requests_get(f"{ENDPOINT_WIKIMEDIA}", params=PARAMS_EXTRACT).json()
+        extract = requests_get(
+            f"{ENDPOINT_WIKIMEDIA}", params=PARAMS_EXTRACT
+        ).json()
 
         self._extract = extract["query"]["pages"][f"{page_id}"]["extract"]
 

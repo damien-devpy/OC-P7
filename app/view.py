@@ -56,6 +56,7 @@ def turn_into_JSON(latitude, longitude, extract, url):
         "longitude": longitude,
         "extract": extract,
         "url": url,
+        "apiKey": environ.get("GOOGLE_KEY"),
     }
 
     return dumps(infos)

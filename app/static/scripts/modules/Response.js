@@ -4,12 +4,13 @@ export class Response {
 
   constructor (response) {
     /* Create a response object. */
-    this._response = response;
+    this._response = JSON.parse(response)
 
-    [this._latitude,
-      this._longitude,
-      this._extract,
-      this._url] = this._parseResponse()
+    this._latitude = this._response.latitude
+    this._longitude = this._response.longitude
+    this._extract = this._response.extract
+    this._url = this._response.url
+    this._apiKey = this._response.apiKey
   }
 
   getResponse () {
@@ -32,12 +33,7 @@ export class Response {
     return this._url
   }
 
-  _parseResponse () {
-    this._response = JSON.parse(this._response)
-
-    return [this._response.latitude,
-      this._response.longitude,
-      this._response.extract,
-      this._response.url]
+  getApiKey () {
+    return this._apiKey
   }
 }
