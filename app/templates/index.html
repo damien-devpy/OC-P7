@@ -3,30 +3,20 @@
     <head>
         <meta charset="utf-8">
         <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/index.css') }}" />
-        <script defer src="{{ url_for ('static', filename='scripts/main.js') }}" type="module"></script>
+        <script async src="{{ url_for ('static', filename='scripts/main.js') }}" type="module"></script>
+        <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+        <script async defer src="https://buttons.github.io/buttons.js"></script>
         <title>At Harold's, GranPy Bot</title>
     </head>
     <body>
 
         <header>
-            Chez Harold, Papy Robot - Heeeeaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaader
+            Chez Harold, Papy Robot. <span class="pjoke">(Et mème à l'insu de son plein gré.)</span>
         </header>
 
-        <section class="central_zone">
+        <section class="central-zone">
 
             <section class="conversation">
-
-
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent massa sapien, ullamcorper quis consequat nec, vehicula ac nisl. Aliquam pulvinar fringilla velit vitae faucibus. Fusce fringilla purus erat, at accumsan ligula posuere a. Phasellus egestas velit arcu. Curabitur vulputate tincidunt odio, pharetra commodo eros viverra sed. Cras lobortis vestibulum ligula sed tincidunt. Aliquam maximus tellus eget justo mattis, in viverra est porttitor.
-
-                Nulla facilisi. Morbi sit amet cursus est. Etiam maximus hendrerit magna ut ultrices. Vivamus rutrum mauris justo, id tincidunt ante consectetur ac. Vestibulum luctus dolor vitae venenatis malesuada. Duis laoreet massa eget enim cursus facilisis. Pellentesque varius purus sit amet enim dapibus iaculis. Maecenas tincidunt egestas feugiat. Cras quis tellus risus. Mauris in nunc sollicitudin, egestas sapien id, tristique nisi. Praesent convallis posuere massa, ac sagittis purus suscipit vel. Etiam blandit a libero quis facilisis. Phasellus ut dictum magna.
-
-                Duis pretium enim in massa feugiat iaculis. Morbi interdum massa quis ligula imperdiet, aliquet ullamcorper ipsum blandit. Aliquam euismod ac ipsum nec consequat. Aliquam imperdiet imperdiet vulputate. Donec ultrices pellentesque neque, vel sollicitudin risus vulputate eget. Nullam ut magna augue. Nulla luctus condimentum scelerisque. Proin id velit tortor. Cras eget tellus vestibulum, tempor enim eget, auctor massa. Sed egestas sollicitudin ante ac volutpat. Fusce dolor felis, ultrices a purus et, pellentesque porttitor ex. Nam luctus lectus a lacus aliquet, eu dictum risus fermentum. Phasellus vitae vehicula velit, in gravida tellus. Vestibulum vulputate nibh metus, vitae mollis augue volutpat vel. Proin feugiat risus vitae arcu fringilla suscipit. Vestibulum mi odio, venenatis ac lacus maximus, pellentesque aliquam nulla.
-
-                Suspendisse hendrerit, dolor quis porttitor congue, purus lacus finibus risus, vitae ultrices turpis ipsum eu mauris. Donec lobortis nisi mi, hendrerit tincidunt nulla maximus vitae. Cras placerat et risus eget imperdiet. Pellentesque gravida, orci eu consectetur gravida, diam felis lacinia ex, et scelerisque lacus lacus eu metus. Nam volutpat est turpis, tempus porta arcu dignissim nec. Donec elementum eu quam ac auctor. Fusce in dui libero. Maecenas vestibulum augue ligula, et semper erat ornare et. Proin at turpis pretium, placerat purus a, tempor leo. In luctus, turpis quis tristique faucibus, eros neque rutrum lectus, eget rhoncus velit nisl eget felis. Maecenas vitae augue a est volutpat eleifend. Pellentesque varius orci mauris, in feugiat augue pulvinar eget. Quisque accumsan pharetra leo sed finibus.
-
-                Etiam quis vehicula augue. In hac habitasse platea dictumst. Donec interdum facilisis lacus ac vulputate. Nulla justo nisl, condimentum eget accumsan vehicula, dignissim interdum eros. Suspendisse ut odio in nunc varius iaculis vel ornare velit. Duis quam metus, egestas et libero ac, feugiat pretium dui. Vestibulum eu enim semper, imperdiet metus vel, semper lacus. In tellus magna, fringilla vel ultricies sed, euismod vitae augue. Integer at accumsan nibh, quis tincidunt nulla. Maecenas ornare dictum eros a pellentesque. Morbi non elit pretium, imperdiet urna eu, euismod sem. 
-
 
             </section>
 
@@ -42,7 +32,8 @@
             <form method="POST" class="granpyForm">
                 {{ form.hidden_tag() }}
                 {{ form.name.label }} 
-                {{ form.name(class="textbox") }}
+                {{ form.name(class="textbox", placeholder="Demande moi une histoire !") }}
+                <br><br>
                 {{ form.submit(class="button") }}
                 {% if sentence %}
                 {{ sentence }}
@@ -51,7 +42,11 @@
         </section>
 
         <footer>
-            Fooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooter
+            <div class="footer-infos">
+                Damien Ramelet - Développeur Python
+                <a href="https://twitter.com/damienrmlt?ref_src=twsrc%5Etfw" class="twitter-follow-button" data-lang="fr" data-show-count="false">Follow @damienrmlt</a>
+                <a class="github-button" href="https://github.com/damien-devpy/OC-P7" data-color-scheme="no-preference: dark; light: dark; dark: dark;" data-icon="octicon-star" aria-label="Star damien-devpy/OC-P7 on GitHub">Star this project on Github</a>
+            </div>
         </footer>
 
     </body>

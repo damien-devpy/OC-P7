@@ -8,13 +8,15 @@ submitForm.setAttribute('onsubmit', 'return false')
 submitForm.addEventListener('submit', onSubmit)
 
 const sectionConversation = document.body.children[1].children[0]
-const sectionGoogleMap = document.body.children[1].children[1]
-const sectionForm = document.body.children[3]
 
 function onSubmit () {
   hideDivMap()
 
-  const inputUser = new InputUser(submitForm.children[2].value)
+  const input = submitForm.children[2].value
+
+  addInputUsertoDOM(input)
+
+  const inputUser = new InputUser(input)
   inputUser.IntoJSON()
 
   const xhr = new XMLHttpRequest()
@@ -26,10 +28,7 @@ function onSubmit () {
     const response = new Response(xhr.response)
     const googleMap = new GoogleMap(response)
 
-    const newParagraph = document.createElement('p')
-    newParagraph.textContent = [response.getLatitude(), response.getLongitude(), response.getExtract(), response.getUrl()]
-
-    sectionConversation.append(newParagraph)
+    addResponseHaroldtoDOM(response)
 
     if (googleMap.mapExist()) {
       googleMap.updateMap(response)
@@ -50,4 +49,40 @@ function hideDivMap () {
 
 function showError () {
   sectionConversation.append('Ooops ! Il y a quelque chose qui ne va pas !')
+}
+
+function addInputUsertoDOM (input) {
+  const newInput = document.createElement('div')
+  newInput.className = 'user'
+  const newImage = document.createElement('div')
+  newImage.className = 'you'
+
+  newInput.textContent = input
+
+  newInput.appendChild(newImage)
+
+  sectionConversation.append(newInput)
+
+  newInput.scrollIntoView(true)
+}
+
+function addResponseHaroldtoDOM (response) {
+  const newResponseExtract = document.createElement('div')
+  newResponseExtract.className = 'granpy'
+
+  const newResponseUrl = document.createElement('a')
+  newResponseUrl.className = 'granpy'
+  newResponseUrl.href = response.getUrl()
+  newResponseUrl.textContent = 'Clique ici pour en savoir plus !'
+
+  const newImage = document.createElement('div')
+  newImage.className = 'harold'
+
+  newResponseExtract.textContent = `${response.getExtract()}`
+
+  newResponseExtract.appendChild(newImage)
+
+  sectionConversation.append(newResponseExtract, newResponseUrl)
+
+  newResponseExtract.scrollIntoView(true)
 }
