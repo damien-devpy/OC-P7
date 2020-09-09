@@ -2,7 +2,8 @@
 <html lang="fr">
     <head>
         <meta charset="utf-8">
-        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/index.css') }}" />
+        <link rel="stylesheet" media="screen and (min-width: 1280px)" type="text/css" href="{{ url_for('static', filename='styles/index.css') }}" />
+        <link rel="stylesheet" media="screen and (max-width: 1280px)" type="text/css" href="{{ url_for('static', filename='styles/index_small_resolution.css') }}" />
         <script async src="{{ url_for ('static', filename='scripts/main.js') }}" type="module"></script>
         <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
         <script async defer src="https://buttons.github.io/buttons.js"></script>
@@ -17,6 +18,50 @@
         <section class="central-zone">
 
             <section class="conversation">
+                <div class="user">Test - Message user<div class="you"></div></div>
+
+                <div class="granpy">Test - Réponse granpy<div class="harold"></div></div>
+                <div class="granpy">Test - Réponse granpy></div>
+                <div class="granpy">Test - Réponse granpy</div>
+
+                <div class="user">Test - Message user<div class="you"></div></div>
+
+                <div class="granpy">Test - Réponse granpy<div class="harold"></div></div>
+
+                <div class="user">Test - Message user<div class="you"></div></div>
+                <div class="user">Test - Message user<div class="you"></div></div>
+
+                <div class="granpy">Test - Réponse granpy<div class="harold"></div></div>
+                <div class="granpy">Test - Réponse granpy></div>
+                <div class="granpy">Test - Réponse granpy</div>
+
+                <div class="user">Test - Message user<div class="you"></div></div>
+
+                <div class="granpy">Test - Réponse granpy<div class="harold"></div></div>
+
+                <div class="user">Test - Message user<div class="you"></div></div>
+                <div class="user">Test - Message user<div class="you"></div></div>
+
+                <div class="granpy">Test - Réponse granpy<div class="harold"></div></div>
+                <div class="granpy">Test - Réponse granpy></div>
+                <div class="granpy">Test - Réponse granpy</div>
+
+                <div class="user">Test - Message user<div class="you"></div></div>
+
+                <div class="granpy">Test - Réponse granpy<div class="harold"></div></div>
+
+                <div class="user">Test - Message user<div class="you"></div></div>
+                <div class="user">Test - Message user<div class="you"></div></div>
+
+                <div class="granpy">Test - Réponse granpy<div class="harold"></div></div>
+                <div class="granpy">Test - Réponse granpy></div>
+                <div class="granpy">Test - Réponse granpy</div>
+
+                <div class="user">Test - Message user<div class="you"></div></div>
+
+                <div class="granpy">Test - Réponse granpy<div class="harold"></div></div>
+
+                <div class="user">Test - Message user<div class="you"></div></div>
             </section>
 
             <section class="gMap">
@@ -28,7 +73,7 @@
             <form method="POST" class="granpyForm">
                 {{ form.hidden_tag() }}
                 {{ form.name.label }} 
-                {{ form.name(class="textbox", placeholder="Demande moi une histoire !") }}
+                {{ form.name(class="textbox", placeholder="Demande moi n'importe quel lieu ! Comment se rendre sur les Champs Élysées par exemple !") }}
                 <br><br>
                 {{ form.submit(class="button") }}
                 {% if sentence %}
