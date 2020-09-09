@@ -32,8 +32,6 @@ export class GoogleMap {
     `
 
     document.head.append(newScript)
-
-    this.showMap()
   }
 
   mapExist () {
@@ -43,14 +41,24 @@ export class GoogleMap {
   }
 
   showMap () {
-    const gMap = document.getElementById('gMap')
+    const centralZone = document.querySelector('.central-zone')
+    const conversation = document.querySelector('.conversation')
+    const gMap = document.querySelector('.gMap')
+
+    centralZone.style.gridTemplateColumns = '50% 50%'
+
+    conversation.style.gridColumn = '1 / 2'
 
     gMap.style.display = 'block'
   }
 
   hideMap () {
-    const gMap = document.getElementById('gMap')
+    const centralZone = document.querySelector('.central-zone')
+    const conversation = document.querySelector('.conversation')
+    const gMap = document.querySelector('.gMap')
 
+    centralZone.style.gridTemplateColumns = '25% 25% 25% 25%'
+    conversation.style.gridColumn = '2 / 4'
     gMap.style.display = 'none'
   }
 

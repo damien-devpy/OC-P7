@@ -1,3 +1,37 @@
+RANDOM_SENTENCE_ERROR = {
+    "Je suis désolé, je n'ai pas bien compris !",
+    "Peux-tu répéter ?",
+    "Répète moi la question, s'il te plaît",
+    "Parle un peu plus fort, je me fais vieux",
+    "",
+}
+
+RANDOM_SENTENCE_GRANPY = {
+    "Aaaah, cet endroit !",
+    "Tu devrais y aller, je te le conseil !",
+    "Tu verras, c'est magique!",
+    "Quand tu seras revenu, tu me raconteras!",
+    "Que de souvenirs... *_*",
+    "Prends ton temps une fois là bas, imprègne toi du lieu...",
+}
+
+RANDOM_SENTENCE_UNKWON_PLACE = {
+    "Mmh... Je ne crois pas me souvenir y être allé.",
+    "Je suis désolé, je ne connais pas cet endroit...",
+    "Ça ne me dit rien, je ne peux pas t'aider. ¯\_(ツ)_/¯",
+    "Je n'y ai jamais mis les pieds, demande plutôt à Google.",
+}
+
+INFOS = {
+    "error": "",
+    "message": "",
+    "latitude": None,
+    "longitude": None,
+    "extract": None,
+    "url": None,
+    "apiKey": None,
+}
+
 ENDPOINT_GOOGLE = "https://maps.googleapis.com/maps/api/geocode/json"
 
 ENDPOINT_WIKIMEDIA = "https://fr.wikipedia.org/w/api.php"

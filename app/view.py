@@ -1,6 +1,10 @@
 from json import dumps
 from os import environ
+from random import sample
 
+from app.configuration import (INFOS, RANDOM_SENTENCE_ERROR,
+                               RANDOM_SENTENCE_GRANPY,
+                               RANDOM_SENTENCE_UNKWON_PLACE)
 from app.location import Location
 from app.parser import Parser
 from app.questionform import QuestionForm
@@ -18,12 +22,18 @@ def index():
     form = QuestionForm()
     if request.method == "GET":
         return render_template("index.html", form=form, sentence=sentence)
-    elif (
-        request.method == "POST"
-    ):  # INSERT managment empty query (Random sentence from GranPy for empty queries)
-        infos = get_infos(request.json["sentence"])
-        infos_into_JSON = turn_into_JSON(*infos)
-        return infos_into_JSON, 200
+    elif request.method == "POST":
+        # If incoming request object contains existing JSON data
+        if bool(request.is_json and request.json["sentence"].strip()):
+            infos, error = get_infos(request.json["sentence"])
+            infos_into_JSON = turn_into_JSON(*infos, request_ok=error)
+            return infos_into_JSON, 200
+        else:
+            # Else returning random error message look like coming from GranPy
+            error_message = turn_into_JSON(
+                sample(RANDOM_SENTENCE_ERROR, 1), request_ok=False
+            )
+            return error_message, 200
 
 
 @app.errorhandler(404)
@@ -40,23 +50,35 @@ def get_infos(sentence):
 
     try:
         location.get_location()
-    except UnknownPlaceError:  # INSERT random system for unknown location
-        return "Je suis désolé, je n'ai pas bien compris. Peux-tu répéter ?"
+        story = Story(location)
+        story.about()
+    except UnknownPlaceError:
+        # If Harold doesn't found requested location, returning random sentence
+        # of error
+        return sample(RANDOM_SENTENCE_UNKWON_PLACE, 1), False
 
-    story = Story(location)
-    story.about()
-    return location.latitude, location.longitude, story.extract, story.url
+    return (
+        sample(RANDOM_SENTENCE_GRANPY, 1),
+        location.latitude,
+        location.longitude,
+        story.extract,
+        story.url,
+    ), True
 
 
-def turn_into_JSON(latitude, longitude, extract, url):
+def turn_into_JSON(*args, request_ok):
     """Turn coordinates of place and wikipedia informations into JSON data."""
 
-    infos = {
-        "latitude": latitude,
-        "longitude": longitude,
-        "extract": extract,
-        "url": url,
-        "apiKey": environ.get("GOOGLE_KEY"),
-    }
+    if request_ok:
+        INFOS["error"] = "false"
+        INFOS["message"] = args[0]
+        INFOS["latitude"] = args[1]
+        INFOS["longitude"] = args[2]
+        INFOS["extract"] = args[3]
+        INFOS["url"] = args[4]
+        INFOS["apiKey"] = environ.get("GOOGLE_KEY")
+    else:
+        INFOS["error"] = "true"
+        INFOS["message"] = args[0]
 
-    return dumps(infos)
+    return dumps(INFOS)

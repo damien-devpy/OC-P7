@@ -1,5 +1,6 @@
 from app.configuration import (ENDPOINT_WIKIMEDIA, PARAMS_EXTRACT,
                                PARAMS_GEOSEARCH, URL_WIKIPEDIA)
+from app.unknownplaceerror import UnknownPlaceError
 from requests import get as requests_get
 
 
@@ -47,10 +48,14 @@ class Story:
             f"{ENDPOINT_WIKIMEDIA}", params=PARAMS_GEOSEARCH
         ).json()
 
-        page_id, page_title = (
-            wiki_page["query"]["geosearch"][0]["pageid"],
-            wiki_page["query"]["geosearch"][0]["title"].replace(" ", "_"),
-        )
+        if wiki_page["query"]["geosearch"]:
+
+            page_id, page_title = (
+                wiki_page["query"]["geosearch"][0]["pageid"],
+                wiki_page["query"]["geosearch"][0]["title"].replace(" ", "_"),
+            )
+        else:
+            raise UnknownPlaceError
 
         self._url = URL_WIKIPEDIA + str(page_id)
 
