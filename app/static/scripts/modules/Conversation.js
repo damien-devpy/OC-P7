@@ -1,10 +1,29 @@
 export class Conversation {
+  /* Create a Conversation object that will allow to interact with the
+    conversation window and add inputs from user and GranPy. */
+
   constructor (input) {
+    /* Create a Conversation object.
+
+    Args:
+
+      input (string): input from user or GranPy
+
+    Attributes:
+
+      this.input (string): Contain an input from user or Granpy
+      this.sectionConversation (object): Object from DOM API representing
+        conversation window.
+
+    */
+
     this.input = input
     this.sectionConversation = document.body.children[1].children[0]
   }
 
   addInputUser () {
+    /* Add an input user to the DOM, display it and scroll onto it. */
+
     const newInput = document.createElement('div')
     newInput.className = 'user'
 
@@ -22,6 +41,8 @@ export class Conversation {
   }
 
   addResponseHarold () {
+    /* Add response from Harold to the DOM, display it and scroll onto it. */
+
     const newResponseExtract = document.createElement('div')
     newResponseExtract.className = 'granpy'
 
@@ -39,6 +60,10 @@ export class Conversation {
   }
 
   addMessageHarold () {
+    /* Add a random message from Harold to the DOM, display it and scroll
+
+    onto it. */
+
     const newMessage = document.createElement('div')
     newMessage.className = 'granpy'
 
@@ -57,6 +82,8 @@ export class Conversation {
   }
 
   resetForm () {
+    /* Clear the form. */
+
     const formToReset = document.querySelector('.textbox')
     formToReset.value = formToReset.defaultValue
   }

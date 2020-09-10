@@ -48,7 +48,9 @@ class Story:
             f"{ENDPOINT_WIKIMEDIA}", params=PARAMS_GEOSEARCH
         ).json()
 
-        if wiki_page["query"]["geosearch"]:
+        if bool(
+            wiki_page.get("query") and wiki_page.get("query").get("geosearch")
+        ):
 
             page_id, page_title = (
                 wiki_page["query"]["geosearch"][0]["pageid"],

@@ -43,7 +43,20 @@ def page_not_found(e):
 
 def get_infos(sentence):
     """Parse an input sentence and try to get infos from it, coordinates,
-    extract from Wikipedia and url."""
+    extract from Wikipedia and url.
+
+    Args:
+
+        sentence (string): Sentence from user input
+
+    Returns:
+
+        tuple: Informations gathered from input parsed (coordinates, url to
+            wikipedia, random message from GranPy)
+
+        boolean: Does the parsing and finding informations occured normally
+
+    """
 
     parser = Parser(sentence)
     location = Location(parser)
@@ -67,7 +80,16 @@ def get_infos(sentence):
 
 
 def turn_into_JSON(*args, request_ok):
-    """Turn coordinates of place and wikipedia informations into JSON data."""
+    """Turn coordinates of place and wikipedia informations into JSON data.
+
+    Args:
+
+        *args (tuple): Multiple args (error, message, latitude, longitude, ...)
+        request_ok (boolean): Does parsing and finding location turn out ok.
+
+    Return:
+
+        INFOS (json): Dict turn into JSON data"""
 
     if request_ok:
         INFOS["error"] = "false"

@@ -1,4 +1,6 @@
 class MockLocation:
+    """Mocking Location class."""
+
     def __init__(self, parser_object):
 
         self._input_parsed = parser_object.parse()

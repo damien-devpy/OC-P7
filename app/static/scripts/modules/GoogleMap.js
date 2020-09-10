@@ -1,31 +1,55 @@
 export class GoogleMap {
-  /* Create a Map object. Contain coordinates and display a Google Map
+  /* Create a Google Map object. Contain coordinates and display a Google Map
     throught the Javascript API. */
 
   constructor (responseObject) {
-    this.latitude = responseObject.getLatitude()
-    this.longitude = responseObject.getLongitude()
-    this.coordinates = { lat: this.latitude, lng: this.longitude }
-    this.apiKey = responseObject.getApiKey()
-    this.url = `https://maps.googleapis.com/maps/api/js?key=${this.apiKey}`
-    this.callback = '&callback=loadMap'
+    /* Create a Google Map object.
 
-    this.sectionGoogleMap = document.body.children[1].children[1]
+    Args:
+
+        responseObject (object): Contain granpy response from an input user
+
+    Attributes:
+
+      this._latitude (string): latitude from location
+      this._longitude (string): latitude from location
+      this._coordinates (object): coordinates from location
+      this._apiKey (string): Google API key for Maps API
+      this._url (string): url for wikipedia page
+      this._callback (string): JS function to call when Maps API got loaded
+      this._sectionGoogleMap (object): Object from DOM API
+      this._mediaQuery (MediaQueryList): Informations for detecting mobile phone
+
+    */
+
+    this._latitude = responseObject.getLatitude()
+    this._longitude = responseObject.getLongitude()
+    this._coordinates = { lat: this._latitude, lng: this._longitude }
+    this._apiKey = responseObject.getApiKey()
+    this._url = `https://maps.googleapis.com/maps/api/js?key=${this._apiKey}`
+    this._callback = '&callback=loadMap'
+
+    this._sectionGoogleMap = document.body.children[1].children[1]
+    this._mediaQuery = window.matchMedia('(max-width: 1024px)').matches
   }
 
   addMap () {
+    /* Add Google Map to the DOM. */
+
     this._addScriptCallAPI()
     this._addScriptMap()
   }
 
   updateMap (responseObject) {
-    this.latitude = responseObject.getLatitude()
-    this.longitude = responseObject.getLongitude()
+    /* Updating Google Map with new location. */
+
+    this._latitude = responseObject.getLatitude()
+    this._longitude = responseObject.getLongitude()
 
     const newScript = document.createElement('script')
 
     newScript.text = `
-        coordinates = {lat: ${this.latitude}, lng: ${this.longitude}};
+        coordinates = {lat: ${this._latitude}, lng: ${this._longitude}};
 
         loadMap()
 
@@ -35,51 +59,87 @@ export class GoogleMap {
   }
 
   mapExist () {
+    /* Check if Google Map already exist in the DOM.
+
+    Return:
+
+      bool: true if the Map already exist, false otherwise
+
+    */
+
     const gMap = document.getElementById('gMap')
 
-    return gMap
+    return Boolean(gMap)
   }
 
   showMap () {
-    const centralZone = document.querySelector('.central-zone')
-    const conversation = document.querySelector('.conversation')
-    const gMap = document.querySelector('.gMap')
+    /* Display the map. */
 
-    centralZone.style.gridTemplateColumns = '50% 50%'
+    // If user using mobile phone or any tiny screen
+    if (this._mediaQuery) {
+      const conversation = document.querySelector('.conversation')
+      const gMap = document.querySelector('.gMap')
 
-    conversation.style.gridColumn = '1 / 2'
+      conversation.style.gridRow = '1 / 2'
 
-    gMap.style.display = 'block'
+      gMap.style.display = 'block'
+    } else {
+      const centralZone = document.querySelector('.central-zone')
+      const conversation = document.querySelector('.conversation')
+      const gMap = document.querySelector('.gMap')
+
+      centralZone.style.gridTemplateColumns = '50% 50%'
+
+      conversation.style.gridColumn = '1 / 2'
+
+      gMap.style.display = 'block'
+    }
   }
 
   hideMap () {
-    const centralZone = document.querySelector('.central-zone')
-    const conversation = document.querySelector('.conversation')
-    const gMap = document.querySelector('.gMap')
+    /* Hide the map. */
 
-    centralZone.style.gridTemplateColumns = '25% 25% 25% 25%'
-    conversation.style.gridColumn = '2 / 4'
-    gMap.style.display = 'none'
+    // If user using mobile phone or any tiny screen
+    if (this._mediaQuery) {
+      const conversation = document.querySelector('.conversation')
+      const gMap = document.querySelector('.gMap')
+
+      conversation.style.gridRow = '1 / 3'
+
+      gMap.style.display = 'none'
+    } else {
+      const centralZone = document.querySelector('.central-zone')
+      const conversation = document.querySelector('.conversation')
+      const gMap = document.querySelector('.gMap')
+
+      centralZone.style.gridTemplateColumns = '25% 25% 25% 25%'
+      conversation.style.gridColumn = '2 / 4'
+      gMap.style.display = 'none'
+    }
   }
 
   _addScriptCallAPI () {
+    /* Add script to the DOM that will call for Google API. */
+
     const newScript = document.createElement('script')
-    newScript.src = this.url + this.callback
+    newScript.src = this._url + this._callback
 
     document.head.append(newScript)
   }
 
   _addScriptMap () {
+    /* Add scripts to the DOM that will allow to display the map. */
+
     const newDiv = document.createElement('div')
     newDiv.id = 'gMap'
 
-    this.sectionGoogleMap.append(newDiv)
+    this._sectionGoogleMap.append(newDiv)
 
     const newScript = document.createElement('script')
     newScript.text = `
         let googleMap;
         let marker;
-        let coordinates = {lat: ${this.latitude}, lng: ${this.longitude}};
+        let coordinates = {lat: ${this._latitude}, lng: ${this._longitude}};
 
         function loadMap() {
 

@@ -3,7 +3,14 @@ export class InputUser {
     */
 
   constructor (inputUser) {
-    /* Turn the input user into a javascript object. */
+    /* Turn the input user into a javascript object.
+
+    Args:
+
+        inputUser (object): Raw user input into JS object.
+
+    */
+
     this._inputUser = {
       sentence: inputUser
     }
@@ -19,6 +26,7 @@ export class InputUser {
 
   IntoJSON () {
     /* Parse the input user into a JSON string.
+
     Parsing occur in place. */
 
     this._inputUser = JSON.stringify(this._inputUser)

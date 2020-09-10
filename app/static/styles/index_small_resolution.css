@@ -1,15 +1,18 @@
 @import url('https://fonts.googleapis.com/css2?family=Lato&display=swap');
 
 html {
-    overflow: hidden;
+    width: 101%;
+    margin: 0;
     font-family: 'Lato', sans-serif;
 }
 
 body {
     overflow: hidden;
     margin: 0;
+
     background-color: white;
     color: #333;
+
     display: grid;
     grid-template-areas:
     "header"
@@ -26,6 +29,7 @@ header {
     grid-area: header;
     height: 5.7vh;
     text-align: center;
+    border: 7px solid #4d515a;
 
     font-size: 4vh;
     font-weight: bold;
@@ -47,13 +51,11 @@ header {
 }
 
 .conversation {
-    width: 98.5vw;
     overflow: auto;
     grid-row: 1 / 3;
     background: #f7f7f7;
     border: 7px solid #4d515a;
-    border-radius: 10px;
-
+    border-top: none;
     display: flex;
     flex-direction: column;
 
@@ -62,7 +64,8 @@ header {
 .gMap {
     display: none;
     grid-row: 2 / 3;
-    border: 3px solid pink;
+    border: 7px solid #4d515a;
+    border-top: none;
 
 }
 
@@ -82,7 +85,7 @@ header {
     padding: 1vh;
 
     background-color: #9ab4f2;
-    color: #404040;
+    color: white;
     border-radius: 5px;
 
     font-weight: 600;
@@ -129,35 +132,51 @@ header {
 
 .form {
     grid-area: form;
-    height: 15vh;
+    height: 10vh;
 }
 
 .textbox {
-    width: 100%;
-    height: 100%;
-    border: none;
+    width: 100vw;
+    height: 10vh;
     background-color: transparent;
+    border: none;
     color: #111;
     font-family: 'Lato', sans-serif;
-    font-size: 20px;
+    font-size: 26.5px;
+    font-weight: bold;
 }
 
+.textbox::placeholder {
+    border-bottom: 7px solid #9ab4f2;
+    text-align: center;
+}
 .button {
     display: none;
 }
 
-.textbox::placeholder {
-    text-align: center;
-}
-
-
 footer {
     grid-area: footer;
-    width: 100%;
-    height: 2vh;
+    width: 100vw;
+    height: 7vh;
+    display: flex;
 }
 
 .footer-infos {
+    margin: auto;
+    font-size: 30px;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+}
+
+.twitter-follow-button {
+    display: block;
+    margin: auto;
+    margin-top: 1vh;
+}
+
+.github-button {
+    display: block;
 }
 
 /* 
