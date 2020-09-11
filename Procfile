@@ -1,1 +1,1 @@
-web: gunicorn app.main:main
+web: gunicorn OC-P7.app:main
