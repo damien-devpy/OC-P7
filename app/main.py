@@ -3,7 +3,7 @@ from app.view import app
 
 def main():
 
-    app.run()
+    return app
 
 
 if __name__ == "__main__":
