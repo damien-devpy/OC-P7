@@ -1,1 +1,1 @@
-web: gunicorn 'app.view:index()'
+web: gunicorn 'app.main:main()'
