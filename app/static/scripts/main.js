@@ -13,7 +13,7 @@ function onSubmit () {
 
   // If the user input isn't empty
   if ((input.trim())) {
-    let conversation = new Conversation(input)
+    const conversation = new Conversation(input)
 
     // Reset the form and display user input to the conversation window
     conversation.resetForm()
@@ -35,7 +35,7 @@ function onSubmit () {
       const response = new Response(xhr.response)
       const googleMap = new GoogleMap(response)
 
-      conversation = new Conversation(response)
+      const conversation = new Conversation(response)
       conversation.addMessageHarold()
 
       if (response.getError() === 'false') {

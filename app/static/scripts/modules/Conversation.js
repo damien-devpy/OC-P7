@@ -38,6 +38,8 @@ export class Conversation {
 
     // Scrolling to user's input
     newInput.scrollIntoView(true)
+
+    this._addLoader()
   }
 
   addResponseHarold () {
@@ -64,6 +66,9 @@ export class Conversation {
 
     onto it. */
 
+    // Deleting loader since wait for GranPy response is over.
+    this._deleteLoader()
+
     const newMessage = document.createElement('div')
     newMessage.className = 'granpy'
 
@@ -86,5 +91,25 @@ export class Conversation {
 
     const formToReset = document.querySelector('.textbox')
     formToReset.value = formToReset.defaultValue
+  }
+
+  _addLoader () {
+    /* Display a loader gif when an user input appear until response Granpy
+      shows up. */
+
+    const newLoader = document.createElement('div')
+    newLoader.className = 'loader'
+
+    this.sectionConversation.append(newLoader)
+
+    newLoader.scrollIntoView(true)
+  }
+
+  _deleteLoader () {
+    /* Delete loader gif from the DOM when Granpy response arrived. */
+
+    const oldLoader = document.getElementsByClassName('loader')[0]
+
+    oldLoader.remove()
   }
 }

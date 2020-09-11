@@ -111,6 +111,14 @@ header {
     font-size: 30px;
 }
 
+.loader {
+    content: url("loader.gif");
+    width: 75px;
+    height: 75px;
+    padding: 1vh;
+    align-self: flex-end;
+}
+
 .harold {
     position: absolute;
     content: url("harold_60.png");
