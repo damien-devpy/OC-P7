@@ -112,7 +112,7 @@ header {
 }
 
 .loader {
-    content: url("loader.gif");
+    content: url("../assets/loader.gif");
     width: 75px;
     height: 75px;
     padding: 1vh;
@@ -121,7 +121,7 @@ header {
 
 .harold {
     position: absolute;
-    content: url("harold_60.png");
+    content: url("../assets/harold_60.png");
     width: 90px;
     height: 90px;
     top: -2em;
@@ -131,7 +131,7 @@ header {
 
 .you {
     position: absolute;
-    content: url("u.png");
+    content: url("../assets/u.png");
     width: 90px;
     height: 90px;
     top: -2em;

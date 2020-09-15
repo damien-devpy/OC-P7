@@ -1,19 +1,24 @@
 <!DOCTYPE html>
 <html lang="fr">
     <head>
-
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/404.css') }}" />
+        <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+        <script async defer src="https://buttons.github.io/buttons.js"></script>
+        <title>Erreur 404</title>
     </head>
     <body>
-        <header>
-            Erreur 404
-        </header>
-
-        <section>
-
+        <section class="page">
+            <div class="sentence">Cherches-tu quelque chose ?</div>
+    
+            <img src="{{ url_for('static', filename='assets/harold_404.jpg') }}" class="harold"/>
+    
+            <footer>
+                <div class="footer-infos">
+                    Damien Ramelet - Développeur Python
+                    <a href="https://twitter.com/damienrmlt?ref_src=twsrc%5Etfw" class="twitter-follow-button" data-lang="fr" data-show-count="false">Follow @damienrmlt</a>
+                    <a class="github-button" href="https://github.com/damien-devpy/OC-P7" data-color-scheme="no-preference: dark; light: dark; dark: dark;" data-icon="octicon-star" aria-label="Star   damien-devpy/OC-P7 on GitHub">Star this project on Github</a>
+                </div>
+            </footer>
         </section>
-
-    <footer>
-        
-    </footer>
     </body>
 </html>

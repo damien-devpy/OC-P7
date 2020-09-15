@@ -23,8 +23,8 @@ RANDOM_SENTENCE_UNKWON_PLACE = {
 }
 
 INFOS = {
-    "error": "",
-    "message": "",
+    "error": None,
+    "message": None,
     "latitude": None,
     "longitude": None,
     "extract": None,

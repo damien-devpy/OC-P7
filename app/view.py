@@ -93,11 +93,13 @@ def turn_into_JSON(*args, request_ok):
 
     if request_ok:
         INFOS["error"] = "false"
-        INFOS["message"] = args[0]
-        INFOS["latitude"] = args[1]
-        INFOS["longitude"] = args[2]
-        INFOS["extract"] = args[3]
-        INFOS["url"] = args[4]
+        (
+            INFOS["message"],
+            INFOS["latitude"],
+            INFOS["longitude"],
+            INFOS["extract"],
+            INFOS["url"],
+        ) = (arg for arg in args)
         INFOS["apiKey"] = environ.get("GOOGLE_KEY_FRONT")
     else:
         INFOS["error"] = "true"

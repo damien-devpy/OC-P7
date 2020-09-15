@@ -112,7 +112,7 @@ header {
 }
 
 .loader {
-    content: url("loader.gif");
+    content: url("../assets/loader.gif");
     width: 50px;
     height: 50px;
     align-self: flex-end;
@@ -120,7 +120,7 @@ header {
 
 .harold {
     position: absolute;
-    content: url("harold_60.png");
+    content: url("../assets/harold_60.png");
     width: 75px;
     height: 75px;
     top: -60px;
@@ -130,7 +130,7 @@ header {
 
 .you {
     position: absolute;
-    content: url("u.png");
+    content: url("../assets/u.png");
     width: 75px;
     height: 75px;
     top: -60px;
