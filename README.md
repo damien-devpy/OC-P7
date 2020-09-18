@@ -23,7 +23,7 @@ Vanilla JS is implemented in order to manage communication between the front and
 
 Powered by Flask, and of course Python.
 
-### Try it :
+#### Try it :
 
 Harold is online, and you can try it [here](https://granpy-bot.herokuapp.com/ "Try it !") 
 
@@ -31,6 +31,7 @@ Users inputs and Harold responses are displayed in a conversation window in real
 just like if you were talking to your Grand Father through Messenger :o)
 
 It's certainly far from being perfect, i'll be glad to have some feedbacks.
+
 Otherwise, if you like it, please consider starring my repo.
         
    
